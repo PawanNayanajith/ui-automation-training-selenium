@@ -110,6 +110,17 @@ public class UiAutomationTrainingBasicTest extends TestBase {
         //Todo - Verify Drop Down Option 1 selected
         //Todo - Select Drop Down Option 2
         //Todo - Verify Drop Down Option 2 selected
+        softAssert = new SoftAssert();
+        softAssert.assertTrue(HomePage.isHomePageDisplayed(), "Home Page is not Displayed");
+        HomePage.clickLink(Constants.DROP_DOWN_LINK);
+        softAssert.assertTrue(DropDownPage.isDropDownDisplayed(), "DropDown is not Displayed");
+        DropDownPage.setDropDownOption(Constants.OPTION_1);
+        softAssert.assertEquals(DropDownPage.getSelectedOption(), Constants.OPTION_1, "DropDown value is incorrect");
+        DropDownPage.setDropDownOption(Constants.OPTION_2);
+        softAssert.assertEquals(DropDownPage.getSelectedOption(), Constants.OPTION_2, "DropDown value is incorrect");
+        softAssert.assertAll();
+
+
     }
 
     /**
@@ -140,19 +151,36 @@ public class UiAutomationTrainingBasicTest extends TestBase {
         //Todo - Verify Login Page Displayed
         //Todo - Verify Logout Alert Displayed
         //Todo - Verify Logout  Alert Message
+        softAssert = new SoftAssert();
+        softAssert.assertTrue(HomePage.isHomePageDisplayed(), "Home Page is not Displayed");
+        HomePage.clickLink(Constants.LOGIN_LINK);
+        LoginPage.setUserName(Constants.LOGIN_USER_NAME);
+        LoginPage.setPassword(Constants.LOGIN_PASSWORD);
+        LoginPage.clickSubmit();
+        softAssert.assertTrue(LoginSecurePage.isLoginSecurePageDisplayed(), "Login Secure Page is not Displayed");
+        softAssert.assertTrue(LoginSecurePage.isLoginAlertDisplayed(), "Login Secure Page Alert is not Displayed");
+        softAssert.assertTrue(LoginSecurePage.getLoginAlertMessage().contains(Constants.LOGIN_SUCCESS_MSG), "Invlaid Message");
+        LoginSecurePage.clickLogout();
+        softAssert.assertTrue(LoginPage.isLoginPageDisplayed(), "Login Secure Page is not Displayed");
+        softAssert.assertTrue(LoginPage.isLogoutAlertDisplayed(), "Login Secure Page Alert is not Displayed");
+        softAssert.assertTrue(LoginPage.getLogoutAlertMessage().contains(Constants.LOGOUT_SUCCESS_MSG), "Invlaid Message");
+        softAssert.assertAll();
+
+
+
     }
 
     /**
      * Verify Login Invalid Scenario
      */
-    @Test(groups = "REGRESSION", priority = 7, dataProvider = "MultipleUserDetails", dataProviderClass = UserDetailsDataProvider.class)
-    public void testVerifyLogin(String username, String password) {
-        //TODO- SAME ACTION SHOULD BE REPEATED FOR MULTIPLE USERS
-        //Todo - Verify HomePage is displayed
-        //Todo - Click Login Link
-        //Todo - Set Invalid Username and Password
-        //Todo - Click Submit
-        //Todo - Verify Login Alert Displayed
-        //Todo - Verify Login  Alert Message
-    }
+//    @Test(groups = "REGRESSION", priority = 7, dataProvider = "MultipleUserDetails", dataProviderClass = UserDetailsDataProvider.class)
+//    public void testVerifyLogin(String username, String password) {
+//        //TODO- SAME ACTION SHOULD BE REPEATED FOR MULTIPLE USERS
+//        //Todo - Verify HomePage is displayed
+//        //Todo - Click Login Link
+//        //Todo - Set Invalid Username and Password
+//        //Todo - Click Submit
+//        //Todo - Verify Login Alert Displayed
+//        //Todo - Verify Login  Alert Message
+//    }
 }
